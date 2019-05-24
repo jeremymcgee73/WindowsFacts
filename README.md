@@ -9,7 +9,7 @@ Thanks to [Josh Rickard](https://github.com/MSAdministrator) for the idea!
 
 
 ```powershell
-Invoke-RestMethod https://windowsfacts.jeremymcgee.com/fact
+Invoke-RestMethod https://api.windowsfacts.com/fact
 
-Invoke-RestMethod https://windowsfacts.jeremymcgee.com/factcount
+Invoke-RestMethod https://api.windowsfacts.com/factcount
 ```
