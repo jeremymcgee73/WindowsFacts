@@ -14,3 +14,17 @@ Invoke-RestMethod https://api.windowsfacts.com/fact
 
 Invoke-RestMethod https://api.windowsfacts.com/factcount
 ```
+
+## Troll your coworkers
+
+Thanks [bigbeardtoejam](https://www.reddit.com/r/PowerShell/comments/6550a7/using_powershell_for_office_pranks/)
+
+```powershell
+#Run this every 1/2 hour and in an 8 hour work day there will be approximately 3 times per day that your victim hears a cat fact
+if ((Get-Random -Maximum 10000) -lt 1875) {
+    Add-Type -AssemblyName System.Speech
+    $SpeechSynth = New-Object System.Speech.Synthesis.SpeechSynthesizer
+    $WindowsFact = (Invoke-RestMethod https://api.windowsfacts.com/fact).fact
+    $SpeechSynth.Speak("Did you know? $WindowsFact")
+}
+```
