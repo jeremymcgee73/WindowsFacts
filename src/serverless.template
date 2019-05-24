@@ -1,0 +1,35 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Transform" : "AWS::Serverless-2016-10-31",
+
+  "Resources" : {
+
+    "Get" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "PSWindowsFact::PSWindowsFact.Bootstrap::ExecuteFunction",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "PSWindowsFact.zip",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": "arn:aws:iam::502407452166:role/WindowsFactLambda",
+        "Events": {
+          "CalculaterApi": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "Outputs" : {
+    "ApiURL" : {
+        "Description" : "API endpoint URL for Prod environment",
+        "Value" : { "Fn::Sub" : "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/" }
+    }
+  }
+}
