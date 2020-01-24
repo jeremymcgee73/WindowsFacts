@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Outputs:
+  ApiURL:
+    Description: API endpoint URL for Prod environment
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+Resources:
+  Get:
+    Properties:
+      CodeUri: s3://windowsfacts-cf/f18341ebdb1c8b6c59a1593354f14721
+      Events:
+        CalculaterApi:
+          Properties:
+            Method: GET
+            Path: /{proxy+}
+          Type: Api
+      Handler: PSWindowsFact::PSWindowsFact.Bootstrap::ExecuteFunction
+      MemorySize: 256
+      Role: arn:aws:iam::502407452166:role/WindowsFactLambda
+      Runtime: dotnetcore2.1
+      Timeout: 30
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

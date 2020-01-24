@@ -1,5 +1,2 @@
-.DS_Store
-.cache
-Thumbs.db
-src/windowsfacts.template
-src/PSWindowsFact.zip
+# Don't check in the Output dir
+Output/
