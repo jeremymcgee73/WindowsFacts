@@ -1,0 +1,63 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Resources": {
+
+    "PSWindowsFact": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "PSWindowsFact::PSWindowsFact.Bootstrap::ExecuteFunction",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "PSWindowsFact.zip",
+        "MemorySize": 512,
+        "Timeout": 30,
+        "Role": {"Fn::GetAtt" : [ "LambdaRole", "Arn"]},
+        "Environment": {
+          "Variables": {
+
+          }
+        },
+        "Events": {
+          "CalculaterApi": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    },
+
+    "LambdaRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy\/service-role\/AWSLambdaBasicExecutionRole"
+        ],
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs" : {
+    "ApiURL" : {
+        "Description" : "API endpoint URL for Prod environment",
+        "Value" : { "Fn::Sub" : "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/" }
+    }
+  }
+}

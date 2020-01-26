@@ -2,6 +2,12 @@
     PSDependOptions = @{
         Target = 'CurrentUser'
     }
+    'AWSLambdaPSCore' = @{
+        Version = '1.2.0.0'
+    }
+    'VaporShell' = @{
+        Version = '2.9.4'
+    }
     'Pester' = @{
         Version = '4.9.0'
         Parameters = @{
